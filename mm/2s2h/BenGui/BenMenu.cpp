@@ -1167,6 +1167,11 @@ void BenMenu::AddEnhancements() {
         .Options(CheckboxOptions().Tooltip(
             "When the Great Fairy's Sword is held, pressing B attacks with it instead of drawing "
             "your equipped sword. The sword can still be put away with A as normal."));
+    AddWidget(path, "Active Item on B", WIDGET_CVAR_CHECKBOX)
+        .CVar("gEnhancements.Equipment.ActiveItemOnB")
+        .Options(CheckboxOptions().Tooltip(
+            "Press B to use the item currently held by Link (Bow, Hookshot, Great Fairy's Sword and Deku Stick). "
+            "Second press on item unequips it."));
 
     path.column = SECTION_COLUMN_2;
     AddWidget(path, "Modes", WIDGET_SEPARATOR_TEXT);
