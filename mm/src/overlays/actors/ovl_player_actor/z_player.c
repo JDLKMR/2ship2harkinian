@@ -8729,15 +8729,10 @@ void func_8083A98C(Actor* thisx, PlayState* play2) {
             s16 newYaw; // from base position shape.rot.y
 
             inputY = sPlayerControlInput->rel.stick_y * 4;
-<<<<<<< ours
-            inputY *= -GameInteractor_InvertControl(GI_INVERT_TELESCOPE_Y);
-=======
             inputX = sPlayerControlInput->rel.stick_x * -4;
-
             GameInteractor_ExecuteOnPlayerTelescopeAim(&inputX, &inputY);
-
             // Pitch:
->>>>>>> theirs
+            inputY *= -GameInteractor_InvertControl(GI_INVERT_TELESCOPE_Y);
             // Add input, clamped to prevent turning too fast
             thisx->focus.rot.x += CLAMP(inputY, -0x12C, 0x12C);
             // Prevent looking too far up or down
