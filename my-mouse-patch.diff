@@ -1265,7 +1265,7 @@ index f0e57daae..ebdb28098 100644
      // Execute rumble callback
      if (sPadMgrInstance->rumbleRetraceCallback != NULL) {
 diff --git a/mm/src/overlays/actors/ovl_player_actor/z_player.c b/mm/src/overlays/actors/ovl_player_actor/z_player.c
-index 1ea1c87fd..7113d2eb5 100644
+index 1ea1c87fd..a6bc87155 100644
 --- a/mm/src/overlays/actors/ovl_player_actor/z_player.c
 +++ b/mm/src/overlays/actors/ovl_player_actor/z_player.c
 @@ -48,6 +48,7 @@
@@ -1287,24 +1287,19 @@ index 1ea1c87fd..7113d2eb5 100644
      iter = &this->controlStickSpinAngles[0];
      iter2 = &sp3C[0];
  
-@@ -8723,16 +8728,22 @@ void func_8083A98C(Actor* thisx, PlayState* play2) {
+@@ -8723,8 +8728,10 @@ void func_8083A98C(Actor* thisx, PlayState* play2) {
              s16 inputX;
              s16 newYaw; // from base position shape.rot.y
  
 -            // Pitch:
              inputY = sPlayerControlInput->rel.stick_y * 4;
-+<<<<<<< ours
-             inputY *= -GameInteractor_InvertControl(GI_INVERT_TELESCOPE_Y);
-+=======
 +            inputX = sPlayerControlInput->rel.stick_x * -4;
-+
 +            GameInteractor_ExecuteOnPlayerTelescopeAim(&inputX, &inputY);
-+
 +            // Pitch:
-+>>>>>>> theirs
+             inputY *= -GameInteractor_InvertControl(GI_INVERT_TELESCOPE_Y);
              // Add input, clamped to prevent turning too fast
              thisx->focus.rot.x += CLAMP(inputY, -0x12C, 0x12C);
-             // Prevent looking too far up or down
+@@ -8732,7 +8739,6 @@ void func_8083A98C(Actor* thisx, PlayState* play2) {
              thisx->focus.rot.x = CLAMP(thisx->focus.rot.x, -0x2EE0, 0x2EE0);
  
              // Yaw: shape.rot.y is used as a fixed starting position
@@ -1312,7 +1307,7 @@ index 1ea1c87fd..7113d2eb5 100644
              inputX *= GameInteractor_InvertControl(GI_INVERT_TELESCOPE_X);
              // Start from current position: no input -> no change
              newYaw = thisx->focus.rot.y - thisx->shape.rot.y;
-@@ -10056,7 +10067,10 @@ s32 func_8083E514(Player* this, f32* arg2, s16* arg3, PlayState* play) {
+@@ -10056,7 +10062,10 @@ s32 func_8083E514(Player* this, f32* arg2, s16* arg3, PlayState* play) {
          if (this->focusActor != NULL) {
              func_8083C62C(this, true);
          } else {
@@ -1324,7 +1319,7 @@ index 1ea1c87fd..7113d2eb5 100644
              func_80832754(this, true);
          }
      } else {
-@@ -13536,6 +13550,12 @@ s32 Ship_HandleFirstPersonAiming(PlayState* play, Player* this, s32 arg2) {
+@@ -13536,6 +13545,12 @@ s32 Ship_HandleFirstPersonAiming(PlayState* play, Player* this, s32 arg2) {
          gyroX = sPlayerControlInput->cur.gyro_y * 720; // -40 to 40, avg -4 to 4
          gyroY = sPlayerControlInput->cur.gyro_x * 720; // -20 to 20, avg -2 to 2
  
@@ -1337,7 +1332,7 @@ index 1ea1c87fd..7113d2eb5 100644
          gyroX *= GameInteractor_InvertControl(GI_INVERT_FIRST_PERSON_GYRO_X);
          gyroY *= -GameInteractor_InvertControl(GI_INVERT_FIRST_PERSON_GYRO_Y);
  
-@@ -15323,6 +15343,13 @@ void Player_Action_18(Player* this, PlayState* play) {
+@@ -15323,6 +15338,13 @@ void Player_Action_18(Player* this, PlayState* play) {
  
          xStick *= GameInteractor_InvertControl(GI_INVERT_SHIELD_X);
          yStick *= GameInteractor_InvertControl(GI_INVERT_SHIELD_Y);
@@ -1351,7 +1346,7 @@ index 1ea1c87fd..7113d2eb5 100644
          var_a1 = (yStick * Math_CosS(temp_a0)) + (Math_SinS(temp_a0) * xStick);
          temp_ft5 = (xStick * Math_CosS(temp_a0)) - (Math_SinS(temp_a0) * yStick);
  
-@@ -15337,6 +15364,7 @@ void Player_Action_18(Player* this, PlayState* play) {
+@@ -15337,6 +15359,7 @@ void Player_Action_18(Player* this, PlayState* play) {
          this->upperLimbRot.x = this->actor.focus.rot.x;
          Math_ScaledStepToS(&this->upperLimbRot.y, temp_ft5, var_a3);
  
@@ -1359,7 +1354,7 @@ index 1ea1c87fd..7113d2eb5 100644
          if (this->av1.actionVar1 != 0) {
              if (!func_808401F4(play, this)) {
                  if (this->skelAnime.curFrame < 2.0f) {
-@@ -19328,6 +19356,9 @@ void func_80855F9C(PlayState* play, Player* this) {
+@@ -19328,6 +19351,9 @@ void func_80855F9C(PlayState* play, Player* this) {
      s16 yawTarget;
  
      this->stateFlags2 |= PLAYER_STATE2_20;
