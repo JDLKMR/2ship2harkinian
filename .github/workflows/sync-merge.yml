@@ -12,10 +12,10 @@ jobs:
   merge:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout merge-attempt
+      - name: Checkout ap-mouse-merge
         uses: actions/checkout@v4
         with:
-          ref: merge-attempt
+          ref: ap-mouse-merge
           fetch-depth: 0
           token: ${{ secrets.PAT_TOKEN }}
 
@@ -63,4 +63,4 @@ jobs:
           fi
 
       - name: Push (also triggers your existing build workflow)
-        run: git push origin merge-attempt
+        run: git push origin ap-mouse-merge
