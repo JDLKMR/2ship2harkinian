@@ -77,4 +77,4 @@ _packages/
 /clang-format.exe
 
 build/
-.cache
+.cachemy-mouse-patch.diff
